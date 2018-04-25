@@ -1,6 +1,6 @@
 import java.util.*
 
-class Main {
+class TRIANGLEPATH {
     private val scanner = Scanner(System.`in`)
 
     fun main(args: Array<String>) {
