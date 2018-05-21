@@ -2,9 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by inkiu on 2018. 5. 19..
- */
 public class DIAMONDPATH {
     private static Scanner scanner = new Scanner(System.in);
 
@@ -13,15 +10,14 @@ public class DIAMONDPATH {
         for (int c = 0; c < caseCount; c ++) {
             solution();
         }
-
         scanner.close();
     }
 
     private static void solution() {
         int maxCol = scanner.nextInt();
 
-        List<PathInt> maxList = new ArrayList<>();
-        maxList.add(new PathInt(scanner.nextInt()));
+        List<Node> maxList = new ArrayList<>();
+        maxList.add(new Node(scanner.nextInt()));
 
         for (int i = 2; i <= maxCol; i ++) {
             maxList = eachLine(i, maxList);
@@ -30,63 +26,68 @@ public class DIAMONDPATH {
             maxList = eachLine(i, maxList);
         }
 
-        System.out.println(maxList.get(0));
+        String directions = getDirection(maxList.get(0));
+        System.out.println(maxList.get(0).max + " " + directions);
     }
 
-    private static List<PathInt> eachLine(int col, List<PathInt> prev) {
-        List<PathInt> next = scanList(col);
+    private static List<Node> eachLine(int col, List<Node> prevs) {
+        List<Node> nexts = scanList(col);
 
-        int left = prev.size() < next.size() ? -1 : 0;
-        int right = prev.size() < next.size() ? 0 : 1;
+        int left = prevs.size() < nexts.size() ? -1 : 0;
+        int right = prevs.size() < nexts.size() ? 0 : 1;
 
-        for (int i = 0; i < next.size(); i ++) {
+        for (int i = 0; i < nexts.size(); i ++) {
             int leftIdx = i + left;
-            int leftVal = leftIdx >= 0 ? prev.get(leftIdx).val : Integer.MIN_VALUE;
+            int leftVal = leftIdx >= 0 ? prevs.get(leftIdx).max : Integer.MIN_VALUE;
             int rightIdx = i + right;
-            int rightVal = rightIdx >= prev.size() ? Integer.MIN_VALUE : prev.get(rightIdx).val;
+            int rightVal = rightIdx >= prevs.size() ? Integer.MIN_VALUE : prevs.get(rightIdx).max;
 
-            List<Integer> newPath = new ArrayList<>();
+            Node currentNode = nexts.get(i);
             if (leftVal >= rightVal) {
-                newPath.addAll(prev.get(leftIdx).path);
-                newPath.add(1);
+                currentNode.max += leftVal;
+                currentNode.prev = prevs.get(leftIdx);
+                currentNode.direction = 1;
             } else {
-                newPath.addAll(prev.get(rightIdx).path);
-                newPath.add(0);
+                currentNode.max += rightVal;
+                currentNode.prev = prevs.get(rightIdx);
+                currentNode.direction = 0;
             }
-            next.set(i, new PathInt(
-                    Math.max(leftVal, rightVal) + next.get(i).val,
-                    newPath
-            ));
         }
-        return next;
+
+        return nexts;
     }
 
-    private static List<PathInt> scanList(int col) {
-        List<PathInt> list = new ArrayList<>();
+    private static List<Node> scanList(int col) {
+        List<Node> list = new ArrayList<>();
         for (int i = 0; i < col; i ++) {
-            list.add(new PathInt(scanner.nextInt()));
+            list.add(new Node(scanner.nextInt()));
         }
         return list;
     }
 
-    private static class PathInt {
+    private static String getDirection(Node start) {
+        if (start.prev == null) return "";
+        return getDirection(start.prev) + start.direction;
+    }
+
+    private static class Node {
         int val;
-        List<Integer> path;
+        int max;
+        int direction;
+        Node prev;
 
-        PathInt(int val) {
-            this(val, new ArrayList<>());
-        }
-
-        PathInt(int val, List<Integer> path) {
+        Node(int val) {
             this.val = val;
-            this.path = path;
+            this.max = val;
         }
 
         @Override
         public String toString() {
-            return "PathInt{" +
+            return "Node{" +
                     "val=" + val +
-                    ", path=" + path +
+                    ", max=" + max +
+                    ", direction=" + direction +
+                    ", prev=" + prev +
                     '}';
         }
     }
