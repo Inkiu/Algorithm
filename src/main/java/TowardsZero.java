@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TOWARDSZERO {
+public class TowardsZero {
 
     static final String TEST =
             "4\n" +

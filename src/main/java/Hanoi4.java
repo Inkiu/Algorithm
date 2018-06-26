@@ -3,10 +3,10 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Random;
 
-public class HANOI4 {
+public class Hanoi4 {
     public static void main(String[] args) throws IOException {
 
-        InputStream source = new ByteArrayInputStream(TESTCASES.HANOI.getBytes());
+        InputStream source = new ByteArrayInputStream(TestCases.HANOI.getBytes());
 
         BufferedReader bi = new BufferedReader(new InputStreamReader(source));
         int cc = Integer.parseInt(bi.readLine().split(" ")[0]);

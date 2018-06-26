@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class DIAMONDPATH {
+public class DiamondPath {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {

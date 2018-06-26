@@ -1,4 +1,4 @@
-public class TESTCASES {
+public class TestCases {
 
     public static final String HANOI = "" +
             "6\n" +
