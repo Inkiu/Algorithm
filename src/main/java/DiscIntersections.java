@@ -12,23 +12,25 @@ public class DiscIntersections {
 
     static class Solution {
         public int solution(int[] A) {
-            long[] starts = new long[A.length];
-            long[] ends = new long[A.length];
+            long[] lefts = new long[A.length];
+            long[] rights = new long[A.length];
             for (int i = 0; i < A.length; i++) {
-                starts[i] = (long) i - A[i];
-                ends[i] = (long) i + A[i];
+                lefts[i] = (long) i - A[i];
+                rights[i] = (long) i + A[i];
             }
-            Arrays.sort(starts);
-            Arrays.sort(ends);
+            Arrays.sort(lefts);     // 원의 좌측 좌표들
+            Arrays.sort(rights);    // 원의 우측 좌표들
 
             int result = 0;
-            int left_idx = 0;
+            int smallThanRight = 0;
             for (int i = 0; i < A.length; i++) {
-                for (int j = left_idx; j < A.length; j++) {
-                    if (starts[j] > ends[i]) break;
-                    left_idx = j;
+                for (int j = smallThanRight; j < A.length; j++) {
+                    if (lefts[j] > rights[i]) break; // right 보다 smallThanRight 가 커질 때
+                    smallThanRight = j;
                 }
-                result = result + left_idx - i;
+                // smallThanRight = 지금의 right 보다 작은 left 의 갯수
+                // i = 이미 앞에서 계산된 원들을 빼는 역할
+                result = result + smallThanRight - i;
                 if (result > 10000000) return -1;
             }
 
