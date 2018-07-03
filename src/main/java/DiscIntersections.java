@@ -1,5 +1,10 @@
 import java.util.*;
 
+/**
+ * 문제 : https://app.codility.com/programmers/lessons/6-sorting/number_of_disc_intersections/
+ * PDF : https://github.com/Inkiu/Algorithm/blob/master/src/main/resources/DiskIntersection.pdf
+ */
+
 public class DiscIntersections {
 
     public static void main(String[] args) {
