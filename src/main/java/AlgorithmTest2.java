@@ -6,11 +6,31 @@ public class AlgorithmTest2 {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.solution(new int[] { 29, 50 }, new int[] { 50, 37 }, new int[] { 37, 70 } ));
-        System.out.println(s.solution(new int[] { 29, 50 }, new int[] { 61, 37 }, new int[] { 37, 70 } ));
-        System.out.println(s.solution(new int[] { 29, 29 }, new int[] { 51, 51 }, new int[] { 70, 70 } ));
-        System.out.println(s.solution(new int[] { 1, 2, 3 }, new int[] { 3, 4, 5 }, new int[] { 4, 5, 6 } ));
-        System.out.println(s.solution(new int[] { 5 }, new int[] { 5 }, new int[] { 5 } ));
+
+        int count = 0;
+
+        while (true) {
+            Random r = new Random();
+            int arrSize = r.nextInt(1000);
+            int[] A = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 10000, false, false);
+            int[] B = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 10000, false, false);
+            int[] C = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 10000, false, false);
+
+            int sol = s.solution(A, B, C);
+            int bru = s.bruteForce(A, B, C);
+
+            if (sol != bru) {
+                System.out.println(Arrays.toString(A));
+                System.out.println(Arrays.toString(B));
+                System.out.println(Arrays.toString(C));
+                break;
+            } else if (count % 100 == 0) {
+                System.out.println(A.length + " s: " + sol + " b: " + bru);
+            }
+
+            count++;
+        }
+        System.out.println(s.bruteForce(new int[]{29, 50}, new int[]{61, 37}, new int[]{37, 70}));
     }
 
     static class Solution {
@@ -23,13 +43,13 @@ public class AlgorithmTest2 {
             }
             Arrays.sort(C);
 
-            int bIndex = B.length -1;
+            int bIndex = B.length - 1;
             int count = 0;
             for (int i = C.length - 1; i >= 0; i--) {
-                if (C[i] > B[bIndex]) count ++;
+                if (C[i] > B[bIndex]) count++;
                 else {
-                    bIndex --;
-                    i ++;
+                    bIndex--;
+                    i++;
                 }
                 if (bIndex < 0) break;
                 bNodes[bIndex] = new Node(B[bIndex], count);
@@ -46,9 +66,9 @@ public class AlgorithmTest2 {
             int ret = 0;
             int bNodeStart = 0;
             for (int i = 0; i < A.length; i++) {
-                while(bNodeStart < A.length && A[i] >= bNodes[bNodeStart].k) {
+                while (bNodeStart < A.length && A[i] >= bNodes[bNodeStart].k) {
                     first -= bNodes[bNodeStart].count;
-                    bNodeStart ++;
+                    bNodeStart++;
                 }
                 ret += first;
             }
@@ -58,6 +78,7 @@ public class AlgorithmTest2 {
         static class Node {
             int k;
             int count;
+
             public Node(int k, int count) {
                 this.k = k;
                 this.count = count;
@@ -73,33 +94,26 @@ public class AlgorithmTest2 {
         }
 
 
+        static int bruteForce(int A[], int[] B, int[] C) {
+            int count = 0;
 
-    }
+            for (int i = 0; i < A.length; i++) {
+                int salad = A[i];
+                for (int j = 0; j < B.length; j++) {
+                    int pizza = B[j];
+                    for (int k = 0; k < C.length; k++) {
+                        int cake = C[k];
 
-    static int[] makeRandom() {
-        Random r = new Random();
-        int[] a = new int[r.nextInt(arrMaxSize)];
-        for (int i = 0; i < a.length; i++) {
-            a[i] = r.nextInt(arrBound) - arrBound / 2;
-        }
-        return a;
-    }
+                        if (salad < pizza && pizza < cake) count++;
 
-    static int[] makeDistinctRandom() {
-        Random r = new Random();
-        List<Integer> a = new ArrayList<>();
-        int size = r.nextInt(arrMaxSize);
-        for (int i = 0; i < size; i++) {
-            int candidate = r.nextInt(arrBound) - arrBound / 2;
-            while (a.contains(candidate)) {
-                candidate = r.nextInt(arrBound) - arrBound / 2;
+
+                    }
+                }
             }
-            a.add(candidate);
+
+            return count;
         }
-        int[] ret = new int[size];
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = a.get(i);
-        }
-        return ret;
+
+
     }
 }
