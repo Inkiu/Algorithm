@@ -9,15 +9,22 @@ public class AlgorithmTest2 {
 
         int count = 0;
 
+        long sTime = 0;
+        long bTime = 0;
+
         while (true) {
             Random r = new Random();
             int arrSize = r.nextInt(1000);
-            int[] A = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 10000, false, false);
-            int[] B = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 10000, false, false);
-            int[] C = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 10000, false, false);
+            int[] A = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 1000000, false, false);
+            int[] B = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 1000000, false, false);
+            int[] C = KotlinUtil.INSTANCE.makeRandomArray(arrSize, 1000000, false, false);
 
+            long st = System.currentTimeMillis();
             int sol = s.solution(A, B, C);
+            sTime += System.currentTimeMillis() - st;
+            st = System.currentTimeMillis();
             int bru = s.bruteForce(A, B, C);
+            bTime += System.currentTimeMillis() - st;
 
             if (sol != bru) {
                 System.out.println(Arrays.toString(A));
@@ -25,11 +32,14 @@ public class AlgorithmTest2 {
                 System.out.println(Arrays.toString(C));
                 break;
             } else if (count % 100 == 0) {
-                System.out.println(A.length + " s: " + sol + " b: " + bru);
+                System.out.println(A.length + " s: " + sol + ", b: " + bru);
+                System.out.println("sTime : " + sTime + "\tbTime : " + bTime);
+                sTime = 0;
+                bTime = 0;
             }
-
             count++;
         }
+
         System.out.println(s.bruteForce(new int[]{29, 50}, new int[]{61, 37}, new int[]{37, 70}));
     }
 

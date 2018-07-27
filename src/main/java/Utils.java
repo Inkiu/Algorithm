@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -16,4 +17,9 @@ public class Utils {
         }
         return ar;
     }
+
+    static <T> void printArray(T[] arr) {
+        System.out.println(Arrays.toString(arr));
+    }
+
 }
