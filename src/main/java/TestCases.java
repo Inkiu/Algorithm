@@ -1,5 +1,19 @@
 public class TestCases {
 
+
+    public static final String HUFFMAN = "" +
+            "5\n" +
+            "4 2\n" +
+            "0 1 2 3\n" +
+            "4 2\n" +
+            "0 1 2 2\n" +
+            "4 3\n" +
+            "0 1 2 2\n" +
+            "10 3\n" +
+            "15 1 2 12 4 8 9 10 2 0\n" +
+            "3 8\n" +
+            "2 4 8\n";
+
     public static final String HANOI = "" +
             "6\n" +
             "5\n" +
