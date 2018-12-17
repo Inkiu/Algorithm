@@ -1,23 +1,24 @@
+import random
+
+
 def solution(N, A):
-    buf_arr = [0 for _ in range(N)]
-    cur_max_value = 0
-    cur_max_counter = 0
+    ans = [0] * N
+    max_count = max(ans)
+    assigned_max = max_count
 
-    for p in A:
-        i = p - 1
-        if p == N + 1:
-            # max_counter
-            cur_max_counter = cur_max_value
+    for i in A:
+        if i <= N:
+            if ans[i - 1] < assigned_max:
+                ans[i - 1] = assigned_max
+            ans[i - 1] += 1
+            max_count = max(max_count, ans[i - 1])
         else:
-            # consider max_counter
-            buf_arr[i] = max(buf_arr[i], cur_max_counter)
-            buf_arr[i] += 1
-            cur_max_value = max(cur_max_value, buf_arr[i])
+            assigned_max = max_count
 
-    for i in range(len(buf_arr)):
-        buf_arr[i] = max(buf_arr[i], cur_max_counter)
+    for i in range(len(ans)):
+        ans[i] = max(assigned_max, ans[i])
 
-    return buf_arr
+    return ans
 
 
 def brute_force(N, A):
@@ -34,8 +35,6 @@ def brute_force(N, A):
 
     return buf_arr
 
-
-import random
 
 while True:
     bound = random.randrange(5, 10)

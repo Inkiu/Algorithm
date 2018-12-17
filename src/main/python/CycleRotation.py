@@ -1,9 +1,8 @@
-def solution(N: list, K: int):
-    L = len(N)
-    if L == 0:
-        return N
-    K = K % L
-    return N[L - K:L] + N[0:L - K]
+def solution(A, K):
+    if not len(A):
+        return A
+    K = K % len(A)
+    return A[-K:] + A[:-K]
 
 
 print(solution([3, 8, 9, 7, 6], 3))

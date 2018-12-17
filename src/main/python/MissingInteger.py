@@ -14,3 +14,4 @@ def solution(A):
 
 
 print(solution([1, 3, 6, 4, 1, 2]))
+print(solution([1, 2, 3]))

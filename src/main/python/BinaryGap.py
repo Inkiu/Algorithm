@@ -1,24 +1,22 @@
 import random
 
 
-def solution(N: int):
-    test_input = N
+def solution(N):
+    n = N
+    start_count = False
     max_count = 0
-    cur_count = 0
+    epoch_count = 0
 
-    while test_input > 0:
-        if (test_input % 2) == 1:
-            break
-        test_input = int(test_input / 2)
+    while n > 0:
+        start_count = start_count or n % 2 == 1
 
-    while test_input > 0:
-        if (test_input % 2) == 1:
-            max_count = max(max_count, cur_count)
-            cur_count = 0
+        if start_count and n % 2 == 0:
+            epoch_count += 1
         else:
-            cur_count += 1
+            epoch_count = 0
 
-        test_input = int(test_input / 2)
+        max_count = max(max_count, epoch_count)
+        n //= 2
 
     return max_count
 
