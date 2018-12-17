@@ -180,6 +180,9 @@ hs_err_pid*
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
+.idea/inspectionProfiles/
+.idea/modules/
+
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
@@ -234,3 +237,5 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+src/main/java/Jogger.java
+src/main/java/TestCases.java
