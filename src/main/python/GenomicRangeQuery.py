@@ -1,46 +1,48 @@
+
 def solution(S, P, Q):
-    a_arr = [0 for _ in range(len(S) + 1)]
-    c_arr = [0 for _ in range(len(S) + 1)]
-    g_arr = [0 for _ in range(len(S) + 1)]
-    t_arr = [0 for _ in range(len(S) + 1)]
+    # A C G T, 1 2 3 4
+    a = [0] * (len(S) + 1)
+    c = [0] * (len(S) + 1)
+    g = [0] * (len(S) + 1)
+    t = [0] * (len(S) + 1)
+    ans = [0] * len(P)
 
     for i, s in enumerate(S):
-        last = 0 if i == 0 else a_arr[i - 1]
-        if s == 'A': last += 1
-        a_arr[i] = last
+        a[i] = a[i - 1]
+        c[i] = c[i - 1]
+        g[i] = g[i - 1]
+        t[i] = t[i - 1]
+        if s == 'A':
+            a[i] += 1
+        elif s == 'C':
+            c[i] += 1
+        elif s == 'G':
+            g[i] += 1
+        else:
+            t[i] += 1
 
-    for i, s in enumerate(S):
-        last = 0 if i == 0 else c_arr[i - 1]
-        if s == 'C': last += 1
-        c_arr[i] = last
+    print(S)
+    print(a, c, g, t)
 
-    for i, s in enumerate(S):
-        last = 0 if i == 0 else g_arr[i - 1]
-        if s == 'G': last += 1
-        g_arr[i] = last
+    for i in range(len(P)):
+        st = P[i] - 1
+        en = Q[i]
+        if a[en] != a[st]:
+            ans[i] = 1
+        elif c[en] != c[st]:
+            ans[i] = 2
+        elif g[en] != g[st]:
+            ans[i] = 3
+        elif t[en] != t[st]:
+            ans[i] = 4
 
-    for i, s in enumerate(S):
-        last = 0 if i == 0 else t_arr[i - 1]
-        if s == 'T': last += 1
-        t_arr[i] = last
-
-    buf_arr = [0] * len(P)
-
-    for i in range(len(buf_arr)):
-        cur = 0
-        if a_arr[Q[i]] - a_arr[P[i] - 1]:
-            cur = 1
-        elif c_arr[Q[i]] - c_arr[P[i] - 1]:
-            cur = 2
-        elif g_arr[Q[i]] - g_arr[P[i] - 1]:
-            cur = 3
-        elif t_arr[Q[i]] - t_arr[P[i] - 1]:
-            cur = 4
-        buf_arr[i] = cur
-
-    return buf_arr
+    return ans
 
 
-# A-1, C-2, G-3, T-4
-print(solution("CAGCCTA", [2, 5, 0], [4, 5, 6]))
-print(solution("A", [0], [0]))
+print(
+    solution("CAGCCTA", [2, 4, 0, 2], [4, 4, 6, 3])
+)
+
+print(solution("AC", [0, 0, 1], [0, 1, 1]))
+
+print(solution("TC", [0, 0, 1], [0, 1, 1]))

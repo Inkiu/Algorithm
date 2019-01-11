@@ -2,9 +2,23 @@ import random
 
 
 def make_random():
-    return [random.randrange(-10000, 10000)
+    return [random.randrange(-10, 10)
             for _ in range(random.randrange(3, 10))]
 
+def solution2(A):
+    st = [0] * len(A)
+    en = [0] * len(A)
+
+    for i in range(1, len(A)-1, 1):
+        st[i] = max(st[i-1] + A[i], 0)
+    for i in range(len(A)-2, -1, -1):
+        en[i] = max(en[i+1] + A[i], 0)
+
+    answer = 0
+    for i in range(1, len(st)-1):
+        answer = max(st[i-1] + en[i+1], answer)
+
+    return answer
 
 def query_sum(p, s, e):
     return p[e - 1] - p[s]
@@ -69,13 +83,15 @@ def brute_force(A):
 
     return max_value
 
+print(solution2([5, 5, 5]))
+solution([5, 5, 5])
 
-while True:
-    # arr = make_random()
-    arr = [3, 2, 6, -1, 4, 5, -1, 2]
-    s = solution(arr)
-    b = brute_force_n2(arr)
-    print(s, b)
-    if s != b:
-        print(arr)
-        break
+# while True:
+#     arr = make_random()
+#     # arr = [-8, -5, 4, -1, 5, 6, -5, -4]
+#     s = solution2(arr)
+#     b = brute_force(arr)
+#     print(s, b)
+#     if s != b:
+#         print(arr)
+#         break
